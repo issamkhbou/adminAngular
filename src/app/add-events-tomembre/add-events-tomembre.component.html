@@ -1,0 +1,27 @@
+
+
+<div class="container">
+
+  <form  (ngSubmit)="onSubmit(selectedValue)" fxLayout="column">
+    <h2 fxLayout="row" fxLayoutAlign="center">Ajouter un Events</h2>
+    <mat-form-field appearance="fill" class="my-16" fxLayout="row" fxLayoutAlign="center">
+      <mat-label>Choix d'evenements</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="event" placeholder="Choix d'outilsChoix d'outilsChoix d'outilsChoix d'outils">
+
+
+        <mat-option *ngFor="let da of data" [value]="da">
+          {{"Event d'id " + da.id + " "+ da.titre}}
+        </mat-option>
+
+
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
+    </div>
+
+  </form>
+</div>

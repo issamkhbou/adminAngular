@@ -1,0 +1,58 @@
+
+  <h1>Liste des Publications</h1>
+  <div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" routerLink="affercterpub">
+      <mat-icon class="s-24 mr-4">add</mat-icon>
+      Add Publication to Membre
+    </button>
+  </div>
+  <table mat-table [dataSource]="item" class="mat-elevation-z8 w-100-p">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="titre">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Titre</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.titre }}
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Date</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.date | date: "d MMMM y, HH:mm" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="lien">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Lien</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.lien }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="sourcepdf">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>sourcepdf</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.sourcepdf }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/editpubs'">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+

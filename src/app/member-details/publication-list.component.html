@@ -1,0 +1,161 @@
+<section class="my-16 align-items center">
+  <div class="example-button-row">
+    <button mat-raised-button (click)="changeCurrentListToPub()">Publications</button>
+    <button mat-raised-button (click)="changeCurrentListToTools() ">Outils</button>
+    <button mat-raised-button (click)="changeCurrentListToEvents()"> Evenements</button>
+  </div>
+</section>
+<mat-divider></mat-divider>
+
+<div class="" *ngIf="currentList=='outils'">
+  <h1>Liste des Outils</h1>
+<div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button color="primary" routerLink="affercteroutil">
+    <mat-icon class="s-24 mr-4">add</mat-icon>
+    Add outil to Membre
+  </button>
+</div>
+<table mat-table [dataSource]="item2" class="mat-elevation-z8 w-100-p">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+    <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>Date</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.date | date: "d MMMM y, HH:mm" }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="source">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>source</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.source }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button [routerLink]="element.id + '/editoutil'">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsOutil"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsOutil"></tr>
+</table>
+</div>
+
+
+<br />
+
+<div class="" *ngIf="currentList=='evenements'">
+  <h1>Liste des Evenements</h1>
+  <div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" routerLink="affercterevent">
+      <mat-icon class="s-24 mr-4">add</mat-icon>
+      Add Events to Member
+    </button>
+  </div>
+  <table mat-table [dataSource]="item3" class="mat-elevation-z8 w-100-p">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="titre">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>titre</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.titre }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Date</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.date | date: "d MMMM y, HH:mm" }}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="lieu">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>lieu</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.lieu }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Pubs</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/editevents'">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsEvent"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsEvent"></tr>
+  </table>
+</div>
+
+
+<br />
+<div class="" *ngIf="currentList=='publications'">
+  <h1>Liste des Publications</h1>
+<div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button color="primary" routerLink="affercterpub">
+    <mat-icon class="s-24 mr-4">add</mat-icon>
+    Add Publication to Membre
+  </button>
+</div>
+<table mat-table [dataSource]="item" class="mat-elevation-z8 w-100-p">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+    <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="titre">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>Titre</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.titre }}
+    </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>Date</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.date | date: "d MMMM y, HH:mm" }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="lien">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>Lien</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.lien }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="sourcepdf">
+    <th mat-header-cell class="px-12" *matHeaderCellDef>sourcepdf</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{ element.sourcepdf }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button [routerLink]="element.id + '/editpubs'">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+</div>
+

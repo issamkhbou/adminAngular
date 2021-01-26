@@ -1,0 +1,29 @@
+
+
+
+
+<div class="container">
+
+  <form  (ngSubmit)="onSubmit(selectedValue)" fxLayout="column">
+    <h2 fxLayout="row" fxLayoutAlign="center">Modifier Encadrant</h2>
+    <mat-form-field appearance="fill" class="my-16" fxLayout="row" fxLayoutAlign="center">
+      <mat-label>Choix</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="food" placeholder="Choix d'outilsChoix Choix d'outilsChoix Choix d'outilsChoix Choix d'outilsChoix d'outilsChoix d'outilsChoix d'outils">
+
+
+        <mat-option *ngFor="let da of data" [value]="da">
+          {{"Encadrant " + da.nom  + " "+ da.prenom + " de Grade "+ da.grade + ' Etablissement ' + da.etablissement}}
+        </mat-option>
+
+
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
+    </div>
+
+  </form>
+</div>

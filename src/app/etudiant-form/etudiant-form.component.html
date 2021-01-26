@@ -1,0 +1,48 @@
+
+<div class="container">
+
+  <h4>Create New Member</h4>
+
+  <form [formGroup]="form" *ngIf="!!form" (ngSubmit)="onSubmit()" fxLayout="column">
+    <mat-form-field>
+      <input matInput placeholder="cin" formControlName="cin">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="nom" formControlName="nom">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="prenom" formControlName="prenom">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <input matInput [matDatepicker]="picker" placeholder="dateNaissance" formControlName="dateNaissance">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="cv"  formControlName="cv">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="email" formControlName="email" >
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="sujet" formControlName="sujet" >
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="diplome" formControlName="diplome" >
+    </mat-form-field>
+
+   <!-- <mat-form-field>
+      <input matInput placeholder="encadrant" formControlName="encadrant" >
+    </mat-form-field>-->
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="form.invalid">Submit</button>
+    </div>
+  </form>
+</div>

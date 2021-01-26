@@ -1,0 +1,31 @@
+<div class="container">
+
+
+
+  <form [formGroup]="form" *ngIf="!!form" (ngSubmit)="onSubmit()" fxLayout="column">
+
+
+    <mat-form-field>
+      <input matInput placeholder="titre" formControlName="titre">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <input matInput [matDatepicker]="picker" placeholder="date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="lien" formControlName="lien">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="sourcepdf" formControlName="sourcepdf">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="type" formControlName="type">
+    </mat-form-field>
+
+
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="form.invalid">Submit</button>
+    </div>
+  </form>
+</div>

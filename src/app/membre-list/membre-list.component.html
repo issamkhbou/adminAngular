@@ -1,0 +1,448 @@
+
+
+<section class="mb-16 align-items center">
+  <div class="example-button-row">
+    <button
+      mat-raised-button
+      (click)="selectChangeHandlerToStudents()"
+      mat-raised-button
+    >
+      Liste des Etudiants
+    </button>
+    <button
+      mat-raised-button
+      (click)="selectChangeHandlerToTeachers()"
+      mat-raised-button
+    >
+      Liste des Enseignants
+    </button>
+
+    <button
+      mat-raised-button
+      (click)="selectChangeHandlerToAllMembers()"
+      mat-raised-button
+    >
+      All members
+    </button>
+  </div>
+</section>
+<mat-divider></mat-divider>
+<div class="my-16" fxLayout="row" fxLayoutAlign="end center" *ngIf="radioSelected=='all'">
+  <button mat-raised-button color="primary" routerLink="create">
+    <mat-icon class="s-24 mr-4">add</mat-icon>
+    Create New
+  </button>
+</div>
+
+<div class="" *ngIf="radioSelected=='all'">
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <span> <i class="fas fa-search"></i></span>
+      <input
+        matInput
+        type="text"
+        (keyup)="doFilter($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100-p">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CIN</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.cin }}</td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Name</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <!-- TODO: change image src with the value of photo url-->
+        <img
+          class="s-48"
+          style="width: 48px; height: 48px"
+          [src]="
+            'https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Avatar_icon_green.svg/1024px-Avatar_icon_green.svg.png'
+          "
+          alt="photo"
+        />
+  
+        {{ element.nom + " " + element.prenom }}
+      </td>
+    </ng-container>
+  
+    <!-- Weight Column
+    <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef> Photo</th>
+      <td mat-cell  *matCellDef="let element"> {{element.photo}} </td>
+    </ng-container>
+  -->
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="cv">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CV</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <a [href]="element.cv" target="_blank">
+          <mat-icon>picture_as_pdf</mat-icon> View
+        </a>
+        <a
+          href="javascript:void(0)"
+          style="cursor: pointer"
+          (click)="downloadPdf(element.cv, 'your_pdfcv_file')"
+        >
+          <mat-icon>get_app</mat-icon> Save
+        </a>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="dateNaissance">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Date Naissance</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.dateNaissance | date: "d MMMM y, HH:mm" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Email</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.email }}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="details">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Details</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/pub'">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <!-- <ng-container matColumnDef="edit">
+      <th mat-header-cell class="px-12" *matHeaderCellDef> Edit</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/edit'">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+  -->
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<!-- .................................................................................-->
+
+<!-- <mat-grid-list cols="2" rowHeight="1:0.2">
+  <mat-grid-tile> -->
+    <!--  <mat-radio-group
+      class="example-radio-group"
+      (change)="selectChangeHandler($event)"
+      [(ngModel)]="radioSelected"
+    >
+      <mat-radio-button class="example-radio-button" value="etd"
+        >Liste des Etudiants</mat-radio-button
+      >
+
+      <mat-radio-button class="example-radio-button" value="ens"
+        >Liste des Enseignant Chercheur</mat-radio-button
+      >
+    </mat-radio-group> -->
+
+    <!--    <button (click)="selectChangeHandlerToStudents()" mat-raised-button>Liste des Etudiants</button>
+    <button (click)="selectChangeHandlerToTeachers()" mat-raised-button>Liste des Enseignants</button> -->
+<!--   </mat-grid-tile>
+</mat-grid-list> -->
+
+<div *ngIf="radioSelected == 'etd'">
+  <div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" routerLink="createEtd">
+      <mat-icon class="s-24 mr-4">add</mat-icon>
+      Create New
+    </button>
+  </div>
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input
+        matInput
+        type="text"
+        (keyup)="doFilter2($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+  </div>
+  <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8 w-100-p">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CIN</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.cin }}
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Name</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <!-- TODO: change image src with the value of photo url-->
+        <img
+          class="s-48"
+          style="width: 48px; height: 48px"
+          [src]="
+            'https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Avatar_icon_green.svg/1024px-Avatar_icon_green.svg.png'
+          "
+          alt="photo"
+        />
+
+        {{ element.nom + " " + element.prenom }}
+      </td>
+    </ng-container>
+    <!-- sujet Column -->
+    <ng-container matColumnDef="sujet">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Sujet</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.sujet }}
+      </td>
+    </ng-container>
+    <!-- diplome Column -->
+    <ng-container matColumnDef="diplome">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Diplome</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.diplome }}
+      </td>
+    </ng-container>
+    <!-- sujet Column
+  <ng-container matColumnDef="encadrant">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Encadrant</th>
+    <td mat-cell class="px-12" *matCellDef="let element"> {{element.encadrant}} </td>
+  </ng-container>-->
+    <!-- Weight Column
+  <ng-container matColumnDef="photo">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Photo</th>
+    <td mat-cell class="px-12" *matCellDef="let element"> {{element.photo}} </td>
+  </ng-container>-->
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="cv">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CV</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <a [href]="element.cv" target="_blank">
+          <mat-icon>picture_as_pdf</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateNaissance">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Date Naissance</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.dateNaissance | date: "d MMMM y, HH:mm" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Email</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.email }}
+      </td>
+    </ng-container>
+<!--     <ng-container matColumnDef="password">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Password</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.password }}
+      </td>
+    </ng-container> -->
+<!--     <ng-container matColumnDef="Encadrant">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Encadrant</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/ficheencadren'">
+          <mat-icon>face</mat-icon> View
+        </button>
+        <button mat-icon-button [routerLink]="element.id + '/editEncadrant'">
+          <mat-icon>import_export</mat-icon>Edit
+        </button>
+      </td>
+    </ng-container> -->
+
+<!--     <ng-container matColumnDef="details">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Details</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/pub'">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Edit</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/editEtd'">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Delete</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onRemoveAccount2(element.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+  </table>
+</div>
+
+<!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<div *ngIf="radioSelected == 'ens'">
+  <div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" routerLink="createEns">
+      <mat-icon class="s-24 mr-4">add</mat-icon>
+      Create New
+    </button>
+  </div>
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input
+        matInput
+        type="text"
+        (keyup)="doFilter3($event.target.value)"
+        placeholder="Filter"
+      />
+    </mat-form-field>
+  </div>
+  <table mat-table [dataSource]="dataSource3" class="mat-elevation-z8 w-100-p">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>ID</th>
+      <td mat-cell class="px-12" *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CIN</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.cin }}
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Name</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <!-- TODO: change image src with the value of photo url-->
+        <img
+          class="s-48"
+          style="width: 48px; height: 48px"
+          [src]="
+            'https://upload.wikimedia.org/wikipedia/en/thumb/7/72/Avatar_icon_green.svg/1024px-Avatar_icon_green.svg.png'
+          "
+          alt="photo"
+        />
+
+        {{ element.nom + " " + element.prenom }}
+      </td>
+    </ng-container>
+
+    <!-- Weight Column
+    <ng-container matColumnDef="photo">
+      <th mat-header-cell class="px-12" *matHeaderCellDef> Photo</th>
+      <td mat-cell class="px-12" *matCellDef="let element"> {{element.photo}} </td>
+    </ng-container>-->
+
+    <ng-container matColumnDef="dateNaissance">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Created Date</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.dateNaissance | date: "d MMMM y, HH:mm" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Email</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.email }}
+      </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="cv">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>CV</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <a [href]="element.cv" target="_blank">
+          <mat-icon>picture_as_pdf</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="etablissement">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Etablissement</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.etablissement }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="grade">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Grade</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.grade }}
+      </td>
+    </ng-container>
+<!--     <ng-container matColumnDef="password">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Password</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        {{ element.password }}
+      </td>
+    </ng-container> -->
+<!-- 
+    <ng-container matColumnDef="etudiant">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Etudiant</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/etudiant'">
+          <mat-icon>accessibility</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+<!--     <ng-container matColumnDef="details">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Details</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/pub'">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Edit</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button mat-icon-button [routerLink]="element.id + '/editEns'">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell class="px-12" *matHeaderCellDef>Delete</th>
+      <td mat-cell class="px-12" *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onRemoveAccount3(element.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns3"></tr>
+  </table>
+</div>

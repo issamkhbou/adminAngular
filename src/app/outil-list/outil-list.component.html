@@ -1,0 +1,83 @@
+
+<div class="my-16" fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button color="primary" routerLink="createoutil">
+    <mat-icon class="s-24 mr-4">add</mat-icon>
+    Create New
+  </button>
+</div>
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100-p">
+
+  <ng-container matColumnDef="id">
+
+    <th mat-header-cell class="px-12" *matHeaderCellDef> ID</th>
+    <td mat-cell class="px-12" *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Created Date</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      {{element.date | date :'d MMMM y, HH:mm'}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="source">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Source</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+    <a [href]="element.source" target="_blank">
+      <mat-icon>link</mat-icon>
+    </a>
+    <span>{{element.source}}</span>
+<!--       <a
+        href="javascript:void(0)"
+        style="cursor:pointer"
+        (click)="downloadPdf(element.source,'your_pdf_file')">
+        Download {{element.source}}
+      </a> -->
+    </td>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Edit</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      <button mat-icon-button [routerLink]="element.id + '/editoutil'">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell class="px-12" *matHeaderCellDef> Delete</th>
+    <td mat-cell class="px-12" *matCellDef="let element">
+      <button mat-icon-button color="warn" (click)="onRemoveAccount(element.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions" stickyEnd>
+
+    <th mat-header-cell class="px-10 w-160" *matHeaderCellDef></th>
+
+    <td mat-cell  class="px-10 w-160" *matCellDef="let element">
+
+      <button mat-icon-button [routerLink]="element.id + '/edit'">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="onRemoveAccount(element.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+    </td>
+
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
